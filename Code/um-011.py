@@ -1,4 +1,4 @@
-## [PY-07] NumPy and Matplotlib ##
+## [UM-011] NumPy and Matplotlib ##
 
 # NumPy arrays #
 import numpy as np

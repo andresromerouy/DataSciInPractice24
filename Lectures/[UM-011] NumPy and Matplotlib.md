@@ -6,7 +6,7 @@ This lecture expands the catalog of data containers with a new type, the **NumPy
 
 The NumPy arrays are modeled after objects that you may have found (and perhaps tried to elude) in your mathematical experience, vectors and matrices. In mathematics, a **vector** is a sequence of numbers, and a **matrix** a rectangular arrangement of numbers. Operations with vectors and matrices are the subject of a branch of mathematics called **linear algebra**. In the Python library **NumPy** (and in many other places), vectors are called one-dimensional (1D) arrays, while matrices are called two-dimensional (2D) arrays. Moreover, arrays of more than two dimensions can be managed without pain with NumPy.
 
-Unlike mathematical vectors and matrices, NumPy arrays are not necessarily numeric. But all the terms of an array must have the same type, so the array itself can have a type. In order to cope with the complexities of the data analysis, NumPy provides additional data types, like the type `object`, but this sophistication is not used in this course.  
+Unlike mathematical vectors and matrices, NumPy arrays are not necessarily numeric. But all the terms of an array must have the same type, so the array itself can have a type. In order to cope with the complexities of the data analysis, NumPy provides additional data types, like the type `object`, but we skip this sophistication here.  
 
 The usual way to import NumPy is:
 

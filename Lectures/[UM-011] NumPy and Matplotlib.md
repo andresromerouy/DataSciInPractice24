@@ -2,7 +2,7 @@
 
 ## NumPy arrays
 
-This lecture expands the catalog of data containers with a new type, the **NumPy array**. We have seen in a previous lecture how to apply a function to all the items of a list with a `for` loop. The procedure was simple, but it gets inefficient when the list is long. With NumPy arrays we have tools to do that faster and also for operating with data containers to obtain new data containers. 
+This lecture expands the catalog of data containers with a new type, the **NumPy array**. You probably know how to apply a function to all the items of a list with a `for` loop. The procedure is simple, but it gets inefficient when the list is long. With NumPy arrays we have tools to do that faster and also for operating with data containers to obtain new data containers. 
 
 The NumPy arrays are modeled after objects that you may have found (and perhaps tried to elude) in your mathematical experience, vectors and matrices. In mathematics, a **vector** is a sequence of numbers, and a **matrix** a rectangular arrangement of numbers. Operations with vectors and matrices are the subject of a branch of mathematics called **linear algebra**. In the Python library **NumPy** (and in many other places), vectors are called one-dimensional (1D) arrays, while matrices are called two-dimensional (2D) arrays. Moreover, arrays of more than two dimensions can be managed without pain with NumPy.
 
@@ -191,7 +191,7 @@ In [23]: bmi[gender == 'M'].mean().round(1)
 Out[23]: 20.6
 ```
 
-*Note*. We have used here `mean()` and `round()` as methods, but you cxan move them to the other side of the expression, as functions.
+*Note*. We have used here `mean()` and `round()` as methods, but you can move them to the other side of the expression, as functions.
 
 ## Plotting with Matplotlib
 
@@ -224,7 +224,7 @@ In [26]: plt.figure(figsize=(5,5))
     ...: plt.legend();
 ```
 
-![](https://github.com/cinnData/PythonBootcamp/blob/main/Figures/fig_7.1.png)
+![](https://github.com/mikecinnamon/DataSci/blob/main/Figures/011.png)
 
 Take care of inputting these lines of code together. The semicolon in the last line stops the Python output showing up. That output would correspond to `plt.legend` and would not say much to you. 
 

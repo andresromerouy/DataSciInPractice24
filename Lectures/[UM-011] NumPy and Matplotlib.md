@@ -213,7 +213,7 @@ First, we fill a 1D array with linearly spaced values. With 100 points, we can c
 In [25]: t = np.linspace(0, 2, 100)
 ```
 
-Next, we ask for the plot, that A Jupyter app will display as Figure 1.
+Next, we ask for the plot, that a Jupyter app will display as Figure 1 below.
 
 ```
 In [26]: plt.figure(figsize=(5,5))

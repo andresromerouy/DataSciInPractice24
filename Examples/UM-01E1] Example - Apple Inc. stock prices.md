@@ -45,7 +45,7 @@ In [1]: import pandas as pd
 In the examples of this course, we use remote data sources. In Pandas, remote source files work the same as local files, the only difference being in the path. The source files for this course can be found in the GitHub repository of the course. The path for these files can be inputted as follows.
 
 ```
-In [2]: path = 'https://raw.githubusercontent.com/mikecinnamon/PythonBootcamp/main/Data/'
+In [2]: path = 'https://raw.githubusercontent.com/mikecinnamon/DataSci/main/Data/'
 ```
 
 ```
@@ -140,7 +140,7 @@ Out[7]:
 5  2022-01-10  169.080002  172.500000  168.169998  172.190002  170.935425   
 6  2022-01-11  172.320007  175.179993  170.820007  175.080002  173.804367   
 7  2022-01-12  176.119995  177.179993  174.820007  175.529999  174.251083   
-8  2022-01-13  175.779999  176.619995  171.789993  172.190002  170.935425   
+8  2022-01-13  175.779999  176.619995  171.789993  172.190002  170.935425   https://raw.githubusercontent.com/mikecinnamon/DataSci/main/Data/
 9  2022-01-14  171.339996  173.779999  171.089996  173.070007  171.809036   
 
       volume  

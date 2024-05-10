@@ -212,7 +212,7 @@ In [12]: df['price'].plot.hist(figsize=(7,5), title='Figure 1. Distribution of t
     color='gray', edgecolor='white', xlabel='Price per night (euros)');
 ```
 
-https://github.com/mikecinnamon/DataSci/blob/main/Figures/01e2-1.png
+![](https://github.com/mikecinnamon/DataSci/blob/main/Figures/01e2-1.png)
 
 Is this histogram useful? Not much, since some very expensive lodgings distort the whole picture, which is a frequent issue with skewed distributions. These extreme prices look errors and, indeed, by using the listing's ID, it can be checked that some of them don't match the prices given in the Airbnb website. Another perspective of the distribution can be given by the statistical summary printed by `.describe()`. 
 
@@ -244,7 +244,7 @@ In [15]: In [33]: df['price'][filter].plot.hist(figsize=(7,5),
     ...:     color='gray', edgecolor='white', bins=30, xlabel='Price per night (euros)');
 ```
 
-https://github.com/mikecinnamon/DataSci/blob/main/Figures/01e2-2.png
+![](https://github.com/mikecinnamon/DataSci/blob/main/Figures/01e2-2.png)
 
 The argument `bin s=30` ensures that the intervals is partitioned in subintervals whose limits are multiples of 5, which makes the figure more appealing. Prices don't change continuously, and hosts prefer prices that are multiples of 10. The histogram also shows that 50, 100 and 150 euros are popular prices.
 
@@ -287,7 +287,7 @@ In [18]: roomtype_price =  pd.pivot_table(df, values='price', index='room_type',
     ...:     color='gray', ylabel='Price per night (euros)');
 ```
 
-https://github.com/mikecinnamon/DataSci/blob/main/Figures/01e2-3.png
+![](https://github.com/mikecinnamon/DataSci/blob/main/Figures/01e2-3.png)
 
 ## Q5. Top-10 neighbourhoods
 

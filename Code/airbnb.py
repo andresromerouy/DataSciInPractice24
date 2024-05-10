@@ -2,7 +2,7 @@
 
 # Importing the data #
 import pandas as pd
-path = 'https://raw.githubusercontent.com/cinnData/PythonBootcamp/main/Data/'
+path = 'https://raw.githubusercontent.com/mikecinnamon/DataSci/main/Data/'
 df = pd.read_csv(path + 'airbnb.csv', index_col=0)
 
 # Exploring the data #

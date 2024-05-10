@@ -56,7 +56,7 @@ This creates the data frame `df`. If the file is located somewhere else, you hav
 
 ## Exploring the data
 
-Since nothing has been specified about the index, a `RangeIndex` has been assigned. The report printed by the method `info()` is probably the best weay to start exploring this data frame.
+Since nothing has been specified about the index, a `RangeIndex` has been assigned. The report printed by the method `info()` is probably the best way to start exploring this data frame.
 
 ```
 In [4]: df.info()

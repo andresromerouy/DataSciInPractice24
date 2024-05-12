@@ -60,7 +60,7 @@ In [1]: import pandas as pd
 The table `rides` has been split in three data sets stores in zipped CSV files in GitHub, with a common path. So we create a variable containing that path.
 
 ```
-In [2]: path = 'https://raw.githubusercontent.com/cinnData/DataSci/main/Data/'
+In [2]: path = 'https://raw.githubusercontent.com/mikecinnamon/DataSci/main/Data/'
 ```
 
 Next, we import to data frames the five files.
@@ -232,7 +232,7 @@ We see here a combination of a trend with time-based patterns, but it is difficu
 In [15]: df['total'].resample('D').mean().plot(figsize=(8,5), title='Figure 2. Daily total demand', color='black', linewidth=1);
 ```
 
-![](https://github.com/cinnData/DataSci/blob/main/Figures/fig_05e_2.png)
+![](https://github.com/mikecinnamon/DataSci/blob/main/Figures/03e-2.png)
 
 Now, the picture is more clear, though part of the variation is probably due to weekends and holidays. Going a bit further, we can aggregate to a weekly data set, again with `.resample()`.
 
@@ -240,7 +240,7 @@ Now, the picture is more clear, though part of the variation is probably due to 
 In [16]: df['total'].resample('W').mean().plot(figsize=(8,5), title='Figure 3. Weekly total demand', color='black', linewidth=1);
 ```
 
-![](https://github.com/cinnData/DataSci/blob/main/Figures/fig_05e_3.png)
+![](https://github.com/mikecinnamon/DataSci/blob/main/Figures/03e-3.png)
 
 Even further, we can aggregate to a monthly data set. The chart shows a combination of a trend plus monthly seasonality.
 
@@ -248,7 +248,7 @@ Even further, we can aggregate to a monthly data set. The chart shows a combinat
 In [17]: df['total'].resample('M').mean().plot(figsize=(8,5), title='Figure 4. Monthly total demand', color='black', linewidth=1);
 ```
 
-![](https://github.com/cinnData/DataSci/blob/main/Figures/fig_05e_4.png)
+![](https://github.com/mikecinnamon/DataSci/blob/main/Figures/03e-4.png)
 
 To see whether the trend is the same for the two user types, we can draw separate charts, which show that the trend only happens in the member group. This may be due to workforce discountinuing remote work and going back to office after the Stay Home order.
 
@@ -257,13 +257,13 @@ In [18]: df['casual'].resample('M').mean().plot(figsize=(8,5), title="Figure 5. 
 
 ```
 
-![](https://github.com/cinnData/DataSci/blob/main/Figures/fig_05e_5.png)
+![](https://github.com/mikecinnamon/DataSci/blob/main/Figures/03e-5.png)
 
 ```
 In [19]: df['member'].resample('M').mean().plot(figsize=(8,5), title="Figure 6. Members' monthly total demand", color='black', linewidth=1);
 ```
 
-![](https://github.com/cinnData/DataSci/blob/main/Figures/fig_05e_6.png)
+![](https://github.com/mikecinnamon/DataSci/blob/main/Figures/03e-6.png)
 
 ## Q4. Intraday variation
 
@@ -321,14 +321,14 @@ In [22: df[['casual', 'hour']].groupby('hour').mean().plot.bar(figsize=(7,5),
     ...:    title="Figure 7. Intraday variation of casuals' average demand", color='gray', legend=False);
 ```
 
-![](https://github.com/cinnData/DataSci/blob/main/Figures/fig_05e_7.png)
+![](https://github.com/mikecinnamon/DataSci/blob/main/Figures/03e-7.png)
 
 ```
 In [23]: df[['member', 'hour']].groupby('hour').mean().plot.bar(figsize=(7,5),
     ...:    title="Figure 8. Intraday variation of members' average demand", color='gray', legend=False);
 ```
 
-![](https://github.com/cinnData/DataSci/blob/main/Figures/fig_05e_8.png)
+![](https://github.com/mikecinnamon/DataSci/blob/main/Figures/03e-8.png)
 
 You may prefer to pack both charts as a **stacked bar chart**, which is east in Pandas, as we seen next.
 
@@ -338,7 +338,7 @@ In [24]: df[['casual', 'member', 'hour']].groupby('hour').mean().plot.bar(figsiz
 
 ```
 
-![](https://github.com/cinnData/DataSci/blob/main/Figures/fig_05e_9.png)
+![](https://github.com/mikecinnamon/DataSci/blob/main/Figures/03e-9.png)
 
 ## Q5. Intraweek variation
 
@@ -355,7 +355,7 @@ In [26]: df[['casual', 'member', 'weekday']].groupby('weekday').mean().plot.bar(
     ...:    title= 'Figure 10. Intraweek variation of total demand', color=['0.4', '0.7'], stacked=True);
 ```
 
-![](https://github.com/cinnData/DataSci/blob/main/Figures/fig_05e_10.png)
+![](https://github.com/mikecinnamon/DataSci/blob/main/Figures/03e-10.png)
 
 ## Q6. Monthly seasonality #
 
@@ -388,16 +388,14 @@ In [28]: df[['total', 'month']].groupby('month').mean().plot(figsize=(8,5),
     title='Figure 11. Monthly seasonality', color='black', linewidth=1, legend=False);
 ```
 
-![](https://github.com/cinnData/DataSci/blob/main/Figures/fig_05e_11.png)
+![](https://github.com/mikecinnamon/DataSci/blob/main/Figures/03e-11.png)
 
 ## Homework
 
-1. Perform an analysis of the analysis of demand in which the patterns of variation for the demand of electric and classic bikes are compoared. Are classic bikes lagging behind of electric bikes?
+1. How is the trend of the demand of electric and classic bikes? Are classic bikes lagging behind electric bikes?
 
-2. Which are the top-10 starting stations? Are they the same as the top-10 ending stations?
+2. Check that the information about the start and end stations is missing only for electric bikes. If you take this missingness as an indication of dockless bike share, you can examine how dockless share has evolved during these three years. Would you say that dockless share is trending up?
 
-3. How frequent are circular rides, starting and ending at the same station?
+3. Which are the top-10 starting stations? Are they the same as the top-10 ending stations?
 
-4. Are there stations with very low activity, so you can consider dropping them?
-
-5. Seasonal patterns can be different across the stations of the Bay Wheels network. How can you detect the stations where the between-month variation is highest?
+4. Are there stations with very low activity, so you can consider dropping them? Which threshold would you apply?

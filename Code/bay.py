@@ -1,8 +1,8 @@
-## [DS-05E] Example - Bay Wheels Data ##
+## [UM-03E] Example - Bay Wheels Data ##
 
 # Importing the data #
 import pandas as pd
-path = 'https://raw.githubusercontent.com/cinnData/DataSci/main/Data/'
+path = 'https://raw.githubusercontent.com/mikecinnamon/DataSci/main/Data/'
 rides1 = pd.read_csv(path + 'bay_rides-1.csv.zip')
 rides2 = pd.read_csv(path + 'bay_rides-2.csv.zip')
 rides3 = pd.read_csv(path + 'bay_rides-3.csv.zip')

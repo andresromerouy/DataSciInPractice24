@@ -14,7 +14,7 @@
 
 **[UM-02] String data in Python**
 
-**[UM-02E] Example - Amazon jobs data**
+**[UM-02E] Example - Amazon Jobs data**
 
 ## Bloque 3: Time series data
 

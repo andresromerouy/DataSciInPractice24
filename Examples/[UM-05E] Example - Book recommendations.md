@@ -199,7 +199,7 @@ In [10]: df1.columns= ['mean', 'count']
 Some books in this collection are marginal, so we can restrict the selection to the titles that have been rated by a minimum number of users, say 25, and sort by the average rating:
 
 ```
-df1[df1['count'] >= 25].sort_values(by='mean', ascending=False).head(10)
+In [11]: df1[df1['count'] >= 25].sort_values(by='mean', ascending=False).head(10)
 Out[11]: 
                                                         mean  count
 title                                                              

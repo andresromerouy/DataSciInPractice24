@@ -67,7 +67,7 @@ In [1]: import pandas as pd
 The data consists of three tables. I import the table `ratings` from the GitHub repository as we have with other tables before:
 
 ```
-In [2]: path = 'https://raw.githubusercontent.com/cinnData/DataSci/main/Data/'
+In [2]: path = 'https://raw.githubusercontent.com/mikecinnamon/DataSci/main/Data/'
 ```
 
 ```

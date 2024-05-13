@@ -2,7 +2,7 @@
 
 # Importing the data #
 import pandas as pd
-path = 'https://raw.githubusercontent.com/cinnData/DataSci/main/Data/'
+path = 'https://raw.githubusercontent.com/mikecinnamon/DataSci/main/Data/'
 ratings = pd.read_csv(path + 'book_ratings.csv.zip')
 ratings.info()
 items = pd.read_csv(path + 'book_items.csv.zip')

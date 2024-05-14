@@ -160,7 +160,7 @@ In [7]: df.duplicated().sum()
 Out[7]: 28
 ```
 
-We find 28 cases. They correspond to listings which have exactly the same data. This may happen, *e.g*. when they refer to beds in a shared bedroom. Neverthless, following the instructions, we drop the duplicates.
+We find 28 cases. They correspond to listings which have exactly the same data. This may happen, *e.g*. when they refer to beds in a shared bedroom. Neverthless, following the instructions, we drop the duplicates with the method `.drop_duplicates()`.
 
 ```
 In [8]: df = df.drop_duplicates()
@@ -177,7 +177,7 @@ Out[9]: (15627, 11)
 
 The report extracted with `.info()` was already letting us know that some columns have missing values. In particular, we have a relevant number of listings for which rating scores are not available (many guests don't rate the lodgings). A specific report on this, which can be restricted to some selected columns, can be extracted with the method `.isna()`, which returns a Boolean data frame of the same shape indicating whether an entry is missing. 
 
-By applying `.sum()` after `.isna()`, we would obtain the column totals, that is, the numbers of missing values for every column. By applying `.mean()`, we obtain the number of missing values (*i.e*. the column totals) divided by the number of listings (*i.e*. the number of rows). This is the proportion of missing values.
+By applying `.sum()` after `.isna()`, we would obtain the column totals, that is, the numbers of missing values for every column. Then, by applying `.mean()`, we obtain the number of missing values (*i.e*. the column totals) divided by the number of listings (*i.e*. the number of rows). So, we get the proportion of missing values for every column
 
 ```
 In [10]: df.isna().mean()
@@ -230,13 +230,13 @@ max      90000.000000
 Name: price, dtype: float64
 ```
 
-For a  better picture of the bulk of Airbnb listings we could **trim the data**. For instance, we can plot a histogram for the listings with prices in a reasonable interval. For an example, we create the filter:
+For a better picture of the bulk of Airbnb listings we could **trim the data**. For instance, we can plot a histogram for the listings with prices in a reasonable interval. To get the histogram, we can use the **filter condition**:
 
 ```
 In [14]: filter = df['price'].between(25,175)
 ```
 
-The role of this filter is obvious. An equivalent condition would be `(df['price'] >= 25) & (df['price'] <= 175)`. Note that the method `.between()` includes the two limits of the interval. Now, we draw a histogram including the listings that pass the filter.
+The role of this filter is obvious. An equivalent condition would be `(df['price'] >= 25) & (df['price'] <= 175)`. Note that the method `.between()` includes the two limits of the interval. Next, we draw a histogram including the listings that pass the filter.
 
 ```
 In [15]: In [33]: df['price'][filter].plot.hist(figsize=(7,5),
@@ -291,7 +291,7 @@ In [18]: roomtype_price =  pd.pivot_table(df, values='price', index='room_type',
 
 ## Q5. Top-10 neighbourhoods
 
-To close this analysis of the Barcelona Airbnb data, we take a look at the neighbourhoods with more listings. The top ten list can be extracted with the method `.value_counts()`, which returns a series with counts of the occurrences of the values of a series, sorted top down. These values come as the index.
+To close this analysis of the Barcelona Airbnb data, we take a look at the neighbourhoods with more listings. The top ten list can be extracted with the method `.value_counts()`, which returns a series with counts of the occurrences of the values of a series, sorted top down. These neighbourhood names come as the index.
 
 ```
 In [19]: df['neighbourhood'].value_counts().head(10)

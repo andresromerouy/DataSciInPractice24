@@ -16,7 +16,7 @@ df[df['date'] < '2022-01-15']
 # Q2. Line plot for the opening price #
 df['open'].plot(figsize=(8,5), title='Figure 1. Opening price (USD)', color='black', linewidth=1);
 
-Q3a. Line plot for the trading volume #
+# Q3a. Line plot for the trading volume #
 df['volume'] = df['volume']/10**6
 df['volume'].plot(figsize=(8,5), title='Figure 2. Trading volume (million shares)', color='black', linewidth=1);
 

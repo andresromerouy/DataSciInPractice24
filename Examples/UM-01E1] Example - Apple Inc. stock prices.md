@@ -45,7 +45,7 @@ In [1]: import pandas as pd
 In the examples of this course, we use remote data sources. In Pandas, remote source files work the same as local files, the only difference being in the path. The source files for this course can be found in the GitHub repository of the course. The path for these files can be inputted as follows.
 
 ```
-In [2]: path = 'https://raw.githubusercontent.com/mikecinnamon/DataSci/main/Data/'
+In [2]: path = 'https://raw.githubusercontent.com/mikecinnamon/PythonBootcamp/main/Data/'
 ```
 
 ```
@@ -140,7 +140,7 @@ Out[7]:
 5  2022-01-10  169.080002  172.500000  168.169998  172.190002  170.935425   
 6  2022-01-11  172.320007  175.179993  170.820007  175.080002  173.804367   
 7  2022-01-12  176.119995  177.179993  174.820007  175.529999  174.251083   
-8  2022-01-13  175.779999  176.619995  171.789993  172.190002  170.935425   https://raw.githubusercontent.com/mikecinnamon/DataSci/main/Data/
+8  2022-01-13  175.779999  176.619995  171.789993  172.190002  170.935425   
 9  2022-01-14  171.339996  173.779999  171.089996  173.070007  171.809036   
 
       volume  
@@ -161,7 +161,7 @@ Out[7]:
 Analysts typically explore trends in stock prices. For the opening price, the corresponding column is extracted as the series `df['open']`. The method `.plot()` returns a line plot. The role of the parameters `figsize`, `color` and linewidth` is clear (see lecture UM-01). Though `linewidth=1` is a default argument, it has been explicitly included to call your attention. Note that it is possible to get a line plot in Pandas  directly, skipping the Matpotlib `pyplot` API. 
 
 ```
-In [8]: df['open'].plot(figsize=(8,5), title='Figure 1. Opening price', color='black', linewidth=1)
+In [8]: df['open'].plot(figsize=(8,5), title='Figure 1. Opening price (USD)', color='black', linewidth=1)
 ```
 
 ![](https://github.com/mikecinnamon/DataSci/blob/main/Figures/01e1-1.png)
@@ -178,7 +178,7 @@ In [9]: df['volume'] = df['volume']/10**6
 A line plot can be obtained just as for the opening price.
 
 ```
-In [10]: df['volume'].plot(figsize=(8,5), title='Figure 2. Trading volume', color='black', linewidth=1);
+In [10]: df['volume'].plot(figsize=(8,5), title='Figure 2. Trading volume (million shares)', color='black', linewidth=1);
 ```
 
 ![](https://github.com/mikecinnamon/DataSci/blob/main/Figures/01e1-2.png)
@@ -188,7 +188,7 @@ No clear trends here. The trading volume looks quite **stationary**. It may make
 ```
 In [11]: df['volume'].plot.hist(figsize=(7,5),
     title='Figure 3. Trading volume (alternative visualization)',
-    color='gray', edgecolor='white', xlabel='Trading volume (1000 shares)');
+    color='gray', edgecolor='white', xlabel='Trading volume (million shares)');
 ```
 
 ![](https://github.com/mikecinnamon/DataSci/blob/main/Figures/01e1-3.png)
@@ -197,7 +197,7 @@ We don't see here the bell-shaped profile of the statisticians' beloved model, t
 
 ## Q4. Trend and distribution for the daily price variation
 
-We could calculate the daily price variation and keep it as a separate series, or add it as a new column to the current data frame `df`. We choose here the second option.
+We can calculate the daily price variation and keep it as a separate series, or add it as a new column to the current data frame `df`. We choose here the second option.
 
 ```
 In [12]: df['dvar'] = df['high'] - df['low']
@@ -223,10 +223,10 @@ Out[13]:
 4   86.7091  3.110001  
 ```
 
-Now, the line plot and the histogram are obtained as for the trading volume. They are similar.
+The line plot and the histogram are obtained as for the trading volume. They are similar.
 
 ```
-In [14]: df['dvar'].plot(figsize=(8,5), title='Figure 4. Daily price variation',
+In [14]: df['dvar'].plot(figsize=(8,5), title='Figure 4. Daily price variation (USD)',
     color='black', linewidth=1);
 ```
 
@@ -243,18 +243,17 @@ In [15]: df['dvar'].plot.hist(figsize=(7,5),
 
 ## Q5. Association between daily price variation and trading volume
 
-Common wisdom tells us that price will show more intraday variation the days in which there is more trading activity, and less intraday variation with low activity. Comparing line plots may gives us an idea of this type of association, but is better to put together the two series in a **scatter plot**. We can get a scatter plot in Pandas with the method `.plot.scatter()`.
+Common wisdom tells us that price will show more intraday variation the days in which there is more trading activity, and less intraday variation with low activity. Though comparing line plots may give us an idea of this type of association, it is better to display together the two series in a **scatter plot**. We can get a scatter plot in Pandas with the method `.plot.scatter()`.
 
 ```
 In [16]: df.plot.scatter(x='volume', y='dvar', 
     title='Figure 6. Daily variation vs volume', figsize=(5,5), color='gray',
-    xlabel='Trading volume (1000 shares)', ylabel='Daily price variation (USD)');
-
+    xlabel='Trading volume (million shares)', ylabel='Daily price variation (USD)');
 ```
 
 ![](https://github.com/mikecinnamon/DataSci/blob/main/Figures/01e1-6.png)
 
-The scatter plot somewhat confirms our guess of a positive association between the trading volume and the daily variation, though the interpretation of plots is always subjective. To be objective, statisticians use the correlation to evaluate the strength of the association. More specifically, it tells us the extent to which one series can be represented as a linear expression of the other series. The correlation can be positive or negative. A strong correlation is one which is close to 1 (or -1), and a weak correlation one which is close to 0. In Pandas, correlations can be calculated with the method `.corr()`.
+The scatter plot somewhat confirms our guess of a positive association between the trading volume and the daily variation, though the interpretation of plots is always subjective. To be objective, statisticians use the correlation to evaluate the strength of the association. More specifically, the correlation tells us the extent to which one series can be represented as a linear expression of the other series. The correlation can be positive or negative. A strong correlation is one which is close to 1 (or -1), and a weak correlation one which is close to 0. In Pandas, correlations can be calculated with the method `.corr()`.
 
 ```
 In [17]: df['volume'].corr(df['dvar'])

@@ -393,7 +393,7 @@ To explore the distribution of numeric series, you use a **histogram**. Alternat
 
 ## Sorting
 
-This last lecture presents a collection of basic procedures for cleaning, exploring and summarizing data stored in Pandas data frames. We start with **sorting** methods. A Pandas series can be sorted by the index or by the values, with the methods `.sort_index()` and `.sort_values()`, respectively. Both methods work for data frames, but, for the second one, you have to specify either the name of a column or a list of column names, which will then be used in the order that you wrote them.
+There is a collection of basic procedures for cleaning, exploring and summarizing data stored in Pandas data frames. We start with **sorting** methods. A Pandas series can be sorted by the index or by the values, with the methods `.sort_index()` and `.sort_values()`, respectively. Both methods work for data frames, but, for the second one, you have to specify either the name of a column or a list of column names, which will then be used in the order that you wrote them.
 
 The parameter `ascending` allows you to choose between ascending and descending ways. The default is `ascending=True`.
 
@@ -428,11 +428,6 @@ When exploring data, we often use tables for discovering patterns. They can be p
 * The function `pivot_table()` extracts a **spreadsheet-style pivot table**. For a Pandas data frame `df`, the syntax is `pd.pivot_table(df, values=col1, index=col2)`. This returns a **one-way table** containing the average value of the column `col1` for the groups defined by the column `col2`. Instead of the average, you can get a different summary by adding an argument `aggfunc=[f1, f2, ...]`. With an additional argument `columns=col3`, you get a **two-way table**. For two-way tables, this function works the same as `crosstab()`, but it can only be applied to columns from the same data frame.
 
 * The method `.groupby()` groups the rows of a data frame so that an aggregate function can be applied to every group, extracting a **SQL-like table** as a data frame. The syntax is `df.groupby(by=col).f()`. To apply more than one function, use `df.groupby(by=col).agg([f1, f2, ...])`.
-## Sorting
-
-This last lecture presents a collection of basic procedures for cleaning, exploring and summarizing data stored in Pandas data frames. We start with **sorting** methods. A Pandas series can be sorted by the index or by the values, with the methods `.sort_index()` and `.sort_values()`, respectively. Both methods work for data frames, but, for the second one, you have to specify either the name of a column or a list of column names, which will then be used in the order that you wrote them.
-
-The parameter `ascending` allows you to choose between ascending and descending ways. The default is `ascending=True`.
 
 ## Homework
 

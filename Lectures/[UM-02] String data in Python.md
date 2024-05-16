@@ -2,7 +2,7 @@
 
 ## Strings
 
-A **string** is a sequence of **characters**. This includes the (English) alphanumeric characters and also special characters like white space, punctuation, etc. Other symbols, like emoticons, can also appear in your data, specially in social networks data. Besides that, you can also find letters from various languages (Spanish, Portuguese, etc) and alphabets (Cyrillic, hiragana, etc), and even ideographs (such as Han characters).
+A **string** is a sequence of **characters**. This includes the (English) alphanumeric characters and also special characters like white space, punctuation, etc. Other symbols, like emoticons, can also appear in your data, specially in social networks data. Besides that, you can also find letters from various languages (Spanish, Portuguese, etc) and alphabets (Cyrillic, hiragana, etc). In certain media, you can also find ideographs (such as Han characters).
 
 There is a basic set of 127 characters, called the **ASCII characters**, which are encoded in the same way by all the computers, so you will never have trouble with them. They include the English letters (without accents), the numbers, basic punctuation (not curly quote marks or long dashes), white space, **control characters** such as the new line, represented in programming languages as `\n`, and other well known symbols, such as the dollar (`$`) and the hash (`#`) symbols. The complete list can be easily found in Internet.
 
@@ -62,7 +62,7 @@ In [7]: iese.replace('IESE', 'Iese')
 Out[7]: 'Iese Business School'
 ```
 
-You can split a string with the method `.split()`. The split can be based on any **separator**. If no separator is specified, any white space string (containing only white space, line breaks or tabs) is a separator.
+You can split a string with the method `.split()`. The split can be based on any **separator**. If no separator is specified, any white space string (containing only white space, line breaks or tabs) works as the separator.
 
 ```
 In [8]: iese.split()
@@ -102,7 +102,7 @@ Out[12]:
 dtype: object
 ```
 
-The method `str.len()` is a vectorized version of the function `len()`, explained above. So, it returns the length of every term of a string series. `.str` is just a flag for string methods in Pandas. In this example, the **empty string** (`''`) has length zero. Since `None` has no length, a `NaN` value has been returned as the fourth term. Also, the series has then been converted by Python to data type `float`, to cope with that (it would be `int` if all the terms had length).
+The method `str.len()` is a vectorized version of the function `len()`, explained above. So, it returns the length of every term of a string series. `.str` is just a flag for string methods in Pandas. In the series `pres`, the **empty string** (`''`) has length zero. Since `None` has no length, a `NaN` value has been returned as the fourth term. Also, the series has then been converted by Python to data type `float`, to cope with that (it would be `int` if all the terms had length).
 
 ```
 In [13]: pres.str.len()
@@ -158,7 +158,7 @@ Out[17]:
 dtype: object
 ```
 
-Note that `.str.split()` returns a series whose terms are lists (of different lengths). This series has data type `object`, which in Pandas means anything that is not Boolean or numeric. The method `.count()` comes vectorized in Pandas in an obvious way:
+Note that `.str.split()` returns a series whose terms are lists (of different lengths). This series has data type `object`, which in Pandas means anything that is not Boolean or numeric. The string method `.count()` has been vectorized in Pandas in an obvious way:
 
 ```
 In [18]: pres.str.count('e')
@@ -170,7 +170,7 @@ Out[18]:
 dtype: float64
 ```
 
-The method `.str.contains()` provides a vectorized version of the statement `substr in str` which has been discussed above. It returns a Boolean series. 
+The method `.str.contains()` provides a vectorized version of the statement `substr in str` which has been discussed above (`In [5]` was an example). It returns a Boolean series.
 
 ```
 In [19]: pres.str.contains('a')
@@ -182,7 +182,7 @@ Out[19]:
 dtype: object
 ```
 
-`.str.contains()`  can be used to filter out documents. For instance, it drops Donald Trump from the presidents list in the following example.
+`.str.contains()` can be used to filter out terms of a string series. For instance, it drops Donald Trump from the presidents list in the following example.
 
 ```
 In [20]: pres = pres[~(pres.isna())]
@@ -229,7 +229,7 @@ Out[23]:
 dtype: object
 ```
 
-The default value of the parameter `regex` in `.str.replace()` is currently `regex=False` (Pandas 2.0.3), but this has recently changed. `.str.split()` and `.str.contains()` also admit a `regex` argument, but the default is `regex=None` for the first one and `regex=True` for the second one. To avoid confusion, it is better to specify a `regex` value for these three methods. To make things worse, `.str.findall()`  and `.str.count()` don't admit a `regex` argument, and they always read the pattern as a regular expression. Sorry about the mess!
+The default value of the parameter `regex` in `.str.replace()` is currently `regex=False` (Pandas 2.0.3), but this is a recent change. `.str.split()` and `.str.contains()` also admit a `regex` argument, but the default is `regex=None` for the first one and `regex=True` for the second one. To avoid confusion, it is better to specify a `regex` value for these three methods. To make things worse, `.str.findall()`  and `.str.count()` don't admit a `regex` argument, and they always read the pattern as a regular expression. Sorry about the mess!
  
 Character classes get more powerful when complemented with **quantifiers**. For instance, followed by a plus sign (`+`), a character class indicates a sequence of any length. So, `[0-9]+` indicates any sequence of digits, therefore any number, and `[a-z]+` indicates any word in lowercase (using only English letters). We can also specify the length of the sequence, as in `[A-Z]{2}`, or the minimum and maximum length, as in `[0-9]{1,3}`.
 
@@ -278,8 +278,8 @@ dtype: int64
 But, if you write these characters with a **escape character** (`\`), they are read literally:
 
 ```
-In [27]: comment.str.count('\.')
-Out[27]: 
+In [28]: comment.str.count('\.')
+Out[28]: 
 0    2
 dtype: int64
 ```

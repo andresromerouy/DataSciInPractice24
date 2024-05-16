@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Job offers are posted at the **Amazon Jobs** website (`amazon.jobs/en-gb`). Given the interest of these data for the community, a **web scraping** project at IESE Business School was started in 2021, with the focus on that website. At that time (no longer, unfortunately), more than 50,000 job offers were posted there. It was discovered that the information shown at the Amazon Jobs pages was loaded from JSON documents which could be accessed directly at `amazon.jobs/en-gb/search.json`. So the project was reoriented and the data extracted directly from the JSON documents, which were captured by playing with the URL parameters at that site.
+Job offers are posted at the **Amazon Jobs** website (`amazon.jobs/en-gb`). Given the interest of these data for the community, a **web scraping** project at IESE Business School was started in 2021, with the focus on that website. At that time (no longer, unfortunately), more than 50,000 job offers were posted there. It was discovered that the information shown at the Amazon Jobs pages was loaded from JSON documents which could be accessed directly at `amazon.jobs/en-gb/search.json`. So the project was reoriented and the data extracted directly from some of those JSON documents, which were captured by playing with the URL parameters at that site.
 
 This example is based on a data subset resulting from selecting the job category **Software Development** and the business category **Amazon Web Services** (AWS).
 
@@ -155,14 +155,14 @@ Out[7]: (7750, 10)
 
 ## Q2. Top locations for software developers at Amazon
 
-The method `.value_counts()` counts the occurrences of every unique value of a series, sorting the counts top down. the length of the series returned by `.value_counts()` is the number of unique values. 
+The method `.value_counts()` counts the occurrences of every unique value in a series, sorting the counts top down. the length of the series returned by `.value_counts()` is the number of unique values. 
 
 ```
 In [8]: df['location'].value_counts().shape
 Out[8]: (174,)
 ```
 
-So, there are 174 distinct locations for software developers at Amazon. The top ten can be extracted with `.head(10)`.
+So, there are 174 distinct locations for software developers at Amazon. The top ten locations can be extracted with `.head(10)`.
 
 ```
 In [9]: df['location'].value_counts().head(10)
@@ -182,7 +182,7 @@ Name: location, dtype: int64
 
 ## Q3. Positions in India
 
-Since, in the location, the country comes first, as a two-letter code, the Indian locations must be those starting with 'IN'. We can capture them easily by slicing the location, as follows.
+In the location, the country comes first, as a two-letter code. So, the Indian locations must be those starting with 'IN'. We can capture them easily by slicing the location, as follows.
 
 ```
 In [10]: df['location'][df['location'].str[:2] == 'IN'].value_counts()
@@ -197,7 +197,7 @@ IN, Hyderabad            1
 Name: location, dtype: int64
 ```
 
-Note. we have already found two examples showing that some locations do not have the expected three parts, country, state and town. See the homework for an exercise on this.
+*Note*. We have already found two examples showing that some locations do not have the expected three parts, country, state and town. See the homework for an exercise on this.
 
 An alternative (and more involved) approach would be to use `.str.contains()`, specifying the substring 'IN' to be at the beginning. Under `regex=True`, we can do this by inserting a **caret** symbol (`^`):
 
@@ -216,7 +216,7 @@ Name: location, dtype: int64
 
 ## Q4. Programming languages in the basic qualifications field
 
-Search for the postings including 'C#' in the basic qualifications is easy with `.str.contains()`. Since computer languages are sometimes written in lowercase, we include here the argument `case=False`, with the search string in lowercase.
+Searching for the postings including 'C#' in the basic qualifications is easy, with `.str.contains()`. Since computer languages are sometimes written in lowercase, we include here the argument `case=False`, with the search string in lowercase.
 
 ```
 In [12]: df['basic_qualifications'].str.contains('c#', case=False).mean().round(3)

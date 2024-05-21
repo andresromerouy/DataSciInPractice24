@@ -12,7 +12,7 @@ The Bay Wheels Program has undergone a bit of change. It started as the Bay Area
 
 ### The data set
 
-The data for the example come in two tables. The table `bay_stations` (in a CSV file) contains data on 642 docking stations. These stations are not the same along the three-yer period, since the organization is dynamic. The columns are:
+The data for the example come in two tables. The table `bay_stations` (in a CSV file) contains data on 642 docking stations. Some of these stations may not be active for the whole three-year period covered by the data, since the organization is dynamic. The columns are:
 
 * `station_id`, a unique identifier of the station. The first two characters indicate the location, with values 'BK' (Berkeley), 'SF' (San Francisco), 'SJ' (San Jose) and 'OK' (Oakland).
 
@@ -40,7 +40,7 @@ The table `bay_rides` (in five zipped CSV files) contains information on all rid
 
 Q1. Add a column `hour` to the table `rides`, containing the hour of the start time, in `datetime64` format. Example: the hour for `2021-01-01 01:20:23` will be `2021-01-01 01:00:00`.
 
-Q2. Group by `hour` and aggregate so you get a a new table with two columns, `casual` and `member` containing, for every hour, the total number of rides of the types of users. 
+Q2. Group by `hour` and aggregate so you get a a new table with two columns, `casual` and `member` containing, for every hour, the total number of rides of the two types of users. 
 
 Q3. After aggregating the data in the preceding question, can see you see a **time trend** in the number of rides? To visualize the trend, would it be better to aggregate more, *e.g*. to use daily data? Do you see a similar trend for the two user types?
 
@@ -73,7 +73,7 @@ In [3]: rides1 = pd.read_csv(path + 'bay_rides-1.csv.zip')
    ...: rides5 = pd.read_csv(path + 'bay_rides-5.csv.zip')
 ```
 
-With the Pandas function `concat`, we can get the **union** of these three data sets.
+With the Pandas function `concat()`, we can get the **union** of these three data sets.
 
 ```
 In [4]: rides = pd.concat([rides1, rides2, rides3, rides4, rides5]))
@@ -119,7 +119,7 @@ Out[6]:
 
 ## Q1. Add a column with the hour
 
-The start and end times have type `str`, so we can create the new column with string methods. There many ways to do it. A simple one is to drop the last six characters, which are the minutes and seconds, replacing them by the string `':00:00'`.
+The start and end times have type `str`, so we can create the new column with string methods. There many ways to do it. A simple one is to replace the last six characters, which are the minutes and seconds, by the string `':00:00'`.
 
 ```
 In [7]: rides['hour'] = rides['start_time'].str[:-6] + ':00:00'
@@ -140,7 +140,7 @@ Out[7]:
 4  2021-01-01 00:22:02            NaN  2021-01-01 00:00:00  
 ```
 
-We need to convert this new column to a datetime type, to be able to extract the weekdays. Type conversions in Pandas are easily managed with the method `.astype()`. 
+We convert this new column to type `datetime64` to be able to extract the weekdays. Type conversions in Pandas are easily managed with the method `.astype()`. 
 
 ```
 In [8]: rides['hour'] = rides['hour'].astype('datetime64[ns]')
@@ -170,7 +170,7 @@ In [9]: rides['casual'] = rides['user_type'] == 'casual'
    ...: rides['member'] = rides['user_type'] == 'member'
 ```
 
-Now, we group by hour and aggregate with the function `sum()`. To get a cleaner picture, we include only the columns which are relevant for the rest of this example. Note the double bracketing, which is needed, since the columns included have to be specified as a list.
+Next, we group by hour and aggregate with the function `sum()`. To get a cleaner picture, we include only the columns that are relevant for the rest of the example. Note the double bracketing, which is needed, since the columns included have to be specified as a list.
 
 ```
 In [10]: df = rides[['hour', 'casual', 'member']].groupby(by='hour').sum()
@@ -185,7 +185,7 @@ hour
 2021-01-01 04:00:00      12       4
 ```
 
-Note that `hour` is no longer a column, but the index. This is the default of the method `.groupby()`. given the type conversions that we performed above, to data type `datetime64`, this index is a `DatetimeIndex`.
+Note that `hour` is no longer a column, but the index. This is the default of the method `.groupby()`. After the type conversion performed above, this index will be a `DatetimeIndex`.
 
 ```
 In [11]: df.index
@@ -226,7 +226,7 @@ In [14]: df['total'].plot(figsize=(8,5), title='Figure 1. Hourly total demand', 
 
 ![](https://github.com/mikecinnamon/DataSci/blob/main/Figures/03e-1.png)
 
-We see here a combination of a trend with time-based patterns, but it is difficult to conclude much with so many observations and the current granularity of the data. Since intraday patterns can be responsible for a significant part of the variation that we see in the chart, we aggregate to a daily data set. We use the mean so the vertical scale in the successive charts remains the same. Note that here, we don't use `.groupby()`, but `.resample()`, and we don't need to create a new data set for plotting.
+We see here a combination of a trend with time-based patterns, but it is difficult to conclude much with so many observations and the current granularity of the data. Since intraday patterns can be responsible for a significant part of the variation that we see in the chart, we aggregate the hourly data to daily data. We use the mean, so the vertical scale in the successive charts remains the same. Note that here, we don't use `.groupby()`, but `.resample()`, and we don't need to create a new data set for plotting.
 
 ```
 In [15]: df['total'].resample('D').mean().plot(figsize=(8,5), title='Figure 2. Daily total demand', color='black', linewidth=1);
@@ -267,7 +267,7 @@ In [19]: df['member'].resample('M').mean().plot(figsize=(8,5), title="Figure 6. 
 
 ## Q4. Intraday variation
 
-To examine the intraday variation, we need to extract an average value for every hour. First, we create a column containing (only) the hour, as an integer, with the method `.hour`.
+To examine the intraday variation, we need to extract an average value for every hour. First, we create a column containing (only) the hour, as an integer. We use here the method `.hour`.
 
 ```
 In [20]: df['hour'] = df.index.hour
@@ -281,7 +281,7 @@ Out[20]:
 2021-01-01 04:00:00      12       4     16     4
 ```
 
-Nom, we group by hour and aggregate to 24 average values. For the casual users, this would be as follows.
+Next, we group by hour and aggregate to 24 average values. For the casual users, this would be as follows.
 
 ```
 In [21]: df[['casual', 'hour']].groupby('hour').mean().round(1)
@@ -359,7 +359,7 @@ In [26]: df[['casual', 'member', 'weekday']].groupby('weekday').mean().plot.bar(
 
 ## Q6. Monthly seasonality #
 
-For the month seasonality we need twelve monthly averages. Again, we create a new column, now with months (January = 1, December = 12).
+For the month seasonality we need twelve monthly averages. Again, we create a new column, now with the month (January = 1, December = 12).
 
 ```
 In [27]: df['month'] = df.index.month

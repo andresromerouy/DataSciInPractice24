@@ -28,7 +28,7 @@ Requests comes with the Anaconda distribution, so you can probably import it dir
 In [1]: import requests
 ```
 
-We apply he Requests function `get()` to the URL of the target web page. When the request is accepted, as in this case, this function returns an object of a special type (type `requests.models.Response`). The attribute `text` of this object is a string which, for an ordinary web page, is the HTML source code.
+We apply he Requests function `get()` to the URL of the target web page. When the request is accepted, as in this case, this function returns an object of a special type (type `requests.models.Response`). The attribute `.text` of this object is a string which, for an ordinary web page, is the HTML source code.
 
 ```
 In [2]: html_str = requests.get('https://jobs.lever.co/netflix').text
@@ -38,7 +38,7 @@ Now, `html_str` is a string containing the source code of the Netflix Lever main
 
 ## Parsing the source code
 
-To **parse** HTML code, learning the tree structure it conveys, we use the function `BeautifulSoup()` from the package `bs4` (Beautiful Soup, version 4). We import this function with:
+To **parse** HTML code, learning the tree structure it conveys, we use the function `BeautifulSoup()`, from the package `bs4` (Beautiful Soup, version 4). We import this function with:
 
 ```
 In [3]: from bs4 import BeautifulSoup
@@ -54,7 +54,7 @@ Next, we use the method `.find_all()` to extract from the soup the data on the t
 
 ## Job titles
 
-In a web scraping job, we take advantage of the fact that web pages posting information units in a systematic way have a repetitive structure, in which every unit is contained in a set of HTML elelements with the same names and attributes values. So, by means of `.find_all()`, we can capture one of features for all the units in one shot, as a list. Let us see how to do this with the job title.
+In a web scraping job, we take advantage of the fact that web pages posting information units in a systematic way have a repetitive structure, made of a set of HTML elelements with the same names and attributes values. So, by means of `.find_all()`, we can capture one of the features for all the units in one shot, as a list. Let us see how to do this with the job title.
 
 The key assumption is that all the job titles are stored in HTML elements with the same name and attribute values, and that this is exclusive of job titles. This is, precisely, what allows Lever to update the pages in a programmatic way with the information supplied by Netflix.
 
@@ -72,7 +72,7 @@ Next, we use the *Inspect tool* of the browser. We right-click on the first job 
  In [5]: job = soup.find_all('h5', {'data-qa': 'posting-name'})
 ```
 
-If this is right, we must have a list with 253 items. Indeed:
+If this is right, we must have a list with 377 items. Indeed:
 
 ```
 In [6]: len(job)
@@ -221,7 +221,7 @@ Out[17]:
 
 ## Exporting the data to a CSV file
 
-Finally, we can export the data to a CSV file by means of the method `.to_csv()`. You can edit the path of the file if you don't it to be placed in the working directory.
+Finally, we can export the data to a CSV file by means of the method `.to_csv()`. You can edit the path of the file if you don't want it to be placed in the working directory.
 
 ```
 In [18]: df.to_csv('netflix.csv', index=False)

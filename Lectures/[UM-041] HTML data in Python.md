@@ -25,7 +25,7 @@ An extremely simple example of a HTML document follows. It is easy to see, in th
 </html>
 ```
 
-Unfortunately, in a HTML document captured from Internet, you will not find such a friendly presentation, with one line for each tag, and indentation to help you see the structure of the document. But there are many tools for rendering HTML documents in this form.
+Unfortunately, in a HTML document captured from Internet, you will not find such a friendly presentation, with one line for each tag, and indentation to help you see the structure of the document. Nevertheless, there are many tools for rendering HTML documents in this form (such as *Inspect*, in Google Chrome).
 
 ## Tags and attributes
 
@@ -35,7 +35,7 @@ The structure of a HTML document is made by the tags. Every part of the document
 
 The tag `<html>` tells the browser that this is a HTML document. The `html` element is the whole document. It has two **child elements**, `head` and `body`. A HTML document is always split in this way. In the example, the `head` element has one **child**, while the `body` element has three children, which are **siblings**.
 
-Then, the `title` element contains the string `'Data Viz'`, enclosed between the start tag and the end tag (this can also be said of the `head` element). This string is referred to as **text**. Also, most of the start tags have **attributes**. In our example, the `div` elements have one `class` attribute, while the `a` element has two attributes, a `class` attribute and a `href` attribute. `class` attributes, which specify one or more `class` names for some elements of the HTML document, are very frequent. The value of a `class` attribute can be used by CSS and JavaScript to perform certain tasks for the elements with that `class` value.
+Then, the `title` element contains the string `'Data Viz'`, enclosed between the start tag and the end tag (this can also be said of the `head` element). Also, most of the start tags have **attributes**. In our example, the `div` elements have one `class` attribute, while the `a` element has two attributes, a `class` attribute and a `href` attribute. `class` attributes, which specify one or more `class` names for some elements of the HTML document, are very frequent. The value of a `class` attribute can be used by CSS and JavaScript to perform certain tasks for the elements with that `class` value.
 
 The `a` tags have a special role, marking hyperlinks. A **hyperlink** is used to link a page to another page, or to download a file. The most important attribute of an `a` element is the `href` attribute, which indicates the link's destination. 
 
@@ -53,7 +53,7 @@ In [1]: from bs4 import BeautifulSoup
 
 This allows us to use the function `BeautifulSoup()`, which can be applied to any string containing HTML code. `BeautifulSoup` **parses** the HTML code, learning the tree structure encoded there, which is then stored in a **soup object**. Let us see how this works in our example. 
 
-We create a string variable, whose value is the HTML document. The triple quote mark stops the Python interpeter having trouble with the line breaks.
+We create a string variable, whose value is the HTML document. Note that the triple quote mark stops the Python interpeter having trouble with the line breaks.
 
 ```
 In [2]: html_str = '''<html>
@@ -84,7 +84,7 @@ In [4]: soup = BeautifulSoup(html_str, 'html.parser')
 
 `BeautifulSoup()` returns a soup object, which stores the contents of `html_str` in a way that the different HTML elements, called **tags** in Beautiful Soup, can be extracted. To get this, it uses a **parser**, which is a program which breaks the string into substrings based on the tags. 
 
-Beautiful Soup does not come with a parser. It uses the one that it prefers among those available in your computer. If `'html.parser'` is specified, the choice is the parser provided by the Python Standard Library, so you do not need any additional package. Since this is a rather technical issue, Iwe follow here the recommended practice. 
+Beautiful Soup does not come with a parser. It uses the one that it prefers among those available in your computer. If `'html.parser'` is specified, the choice is the parser provided by the Python Standard Library, so you do not need any additional package. Since this is a rather technical issue, we follow here the recommended practice. 
 
 The object `soup` has a special type:
 
@@ -116,7 +116,7 @@ In [8]: type(soup.head)
 Out[8]: bs4.element.Tag
 ```
 
-Though, formally, `BeautifulSoup` and `Tag` are different types, a tag works in practice as a smaller soup, so you can extract elements within elements:
+Though, formally, `BeautifulSoup` and `Tag` are different types, a `Tag` object works in practice as a smaller soup, so you can extract elements within elements:
 
 ```
 In [9]: soup.head.title
@@ -136,7 +136,7 @@ In [11]: soup.div
 Out[11]: <div class="course">Data Visualization</div>
 ```
 
-The simplest way to extract tags from the soup is based on the methods `.find()` and `.find_all()`. The method `.find_all()` returns a list containing all the tags that satisfy a specification (eventually empty), while `.find()` returns only the first one (or `None`, if there is no tag satisfying it). Let us see how to use in this method in our example.
+The simplest way to extract tags from the soup is based on the methods `.find()` and `.find_all()`. The method `.find_all()` returns a list containing all the tags that satisfy a specification (eventually empty), while `.find()` returns only the first one (or `None`, if there is no tag satisfying it). Let us see how to use this method in our example.
 
 ## The method .find()
 
@@ -154,14 +154,14 @@ In [13]: soup.find('div', attrs={'class': 'course'})
 Out[13]: <div class="course">Data Visualization</div>
 ```
 
-For the attribute `class`, this is can be shortened, as in: 
+For the attribute `class`, this can be shortened, as in: 
 
 ```
 In [14]: soup.find('div', 'program')
 Out[14]: <div class="program">MBA full-time</div>
 ```
 
-Since a tag works as a smaller soup, you can iterate the method `.find()`:
+Since a `Tag` object works as a smaller soup, you can iterate the method `.find()`:
 
 ```
 In [15]: soup.find('head').find('title')
@@ -170,7 +170,7 @@ Out[15]: <title>Data Viz</title>
 
 ## The method .find_all()
 
-The method `.find_all()` uses the same syntax as `.find()` but, instead of a single tag, it returns a list with all the tags that satisfy the specification:
+The method `.find_all()` uses the same syntax as `.find()` but, instead of a single element, it returns a list with all the elements that satisfy the specification:
 
 ```
 In [16]: soup.find_all('div')
@@ -179,7 +179,7 @@ Out[16]:
  <div class="program">MBA full-time</div>]
 ```
 
-Note that `.ind_all()` *always* returns a list. The list can be empty (`.find()` would return `None` in that case) 
+Note that `.find_all()` *always* returns a list. The list can be empty (`.find()` would return `None` in that case) 
 
 ```
 In [17]: soup.find('head').find_all('div')
@@ -235,8 +235,7 @@ In [22]: [t.string for t in soup.find_all('div')]
 Out[22]: ['Data Visualization', 'MBA full-time']
 ```
 
-In certain cases, we are interested in the value of an attribute. A frequent example is that of an `a` tag whose
-attribute `href` contains a relevant link. The link is then extracted as:
+In certain cases, we are interested in the value of an attribute. A frequent example is that of an `a` element whose attribute `href` contains a relevant link. The link is then extracted as:
 
 ```
 In [23]: soup.find('a')['href']
@@ -245,7 +244,7 @@ Out[23]: 'faculty-research/faculty/miguel-angel-canela'
 
 ## Finding the elements containing a string
 
-In `find_all`, the parameter `string` allows searching elements by the text enclosed:
+In the method `.find_all()`, the parameter `string` allows searching elements by the text enclosed:
 
 ```
 In [24]: soup.find_all('div', string='Data Visualization')

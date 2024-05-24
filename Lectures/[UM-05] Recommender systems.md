@@ -59,7 +59,7 @@ The neighbors of a user are those users with highest similarity. Although there 
 
 Once the neighbors of a user *u* have been determined, we can calculate a predicted rating for every item the user has not rated yet. The predicted rating is calculated as the weighted average of the ratings of the neighbors, if available, with the weights given by the similarities. The formula is
 
-$$\hat R(u,i) = \bar R(u) + \frac{\displaystyle \sum_v\big[R(v,i) - \bar R(v)\big]\,s(u,v)} {\displaystyle \sum_v s(u,v)}\,,$$
+$$\hat R(u,i) = \bar R(u) + \frac{\displaystyle \sum_v\big[R(v,i) - \bar R(v)\big]\,s(u,v)} {\displaystyle \sum_v s(u,v)},$$
 
 where *R*(*u*,*i*) is the rating of item *i* by user *u*, *s*(*u*,*v*) is the similarity between users *u* and *v*, and the sum is performed across the neighbors of the user *u* who rated item *i*.
 
@@ -69,7 +69,7 @@ In item-based systems, we start by calculating the *between-item* similarities. 
 
 To get the predicted ratings for an item *i*, needed only for the users who have not rated *i*, we calculate the weighted average of the ratings of the neighbors, with the weights given by the similarities:
 
-$$\hat R(u,i) = \frac{\displaystyle\sum_j R(u,j)\,s(i,j)}{\displaystyle\sum_j s(i,j)}\,.$$
+$$\hat R(u,i) = \frac{\displaystyle\sum_j R(u,j)\,s(i,j)}{\displaystyle\sum_j s(i,j)}.$$
 
 The sums are performed across the neighbors of item *i* that have been rated by user *u*. 
 

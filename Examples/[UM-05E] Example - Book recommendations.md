@@ -64,7 +64,7 @@ We start by importing Pandas, as usual.
 In [1]: import pandas as pd
 ```
 
-The data consists of three tables. I import the table `ratings` from the GitHub repository as we have with other tables before:
+The data consists of three tables. We import the table `ratings` from the GitHub repository as we have with other tables before:
 
 ```
 In [2]: path = 'https://raw.githubusercontent.com/mikecinnamon/DataSci/main/Data/'
@@ -109,7 +109,7 @@ We leave aside the table `users`, because it will not involved in the analysis o
 
 ## Joining the tables
 
-The Pandas function `merge()` joins two data frames based on common columns. The default of this function performs what in SQL is called a **natural join**, that is, it joins the tables based on the columns with the same name in both tables.
+The method `.merge()` joins two data frames based on common columns. The default of this function performs what in SQL is called a **natural join**, that is, it joins the tables based on the columns with the same name in both tables.
 
 We join `ratings` with `items`. The join is based on the (common) column `isbn`. We call `df` the data frame resulting from this join. 
 
@@ -135,7 +135,7 @@ memory usage: 70.8+ MB
 
 ## Q1. How often do bookcrossers rate the books they pick?
 
-Compared to e-commerce sites like Amazon, rating in Bookcrossing is quite frequent, although more than one half of the books picked are not rated. The books effectively rated are those with positive rating, so we can use the Boolean mask `ratings['rating'] > 0` to capture them:
+Compared to e-commerce sites like Amazon, rating in Bookcrossing is quite frequent, although more than one half of the books picked are not rated. The books effectively rated are those with positive rating, so we can use the Boolean mask `ratings['rating'] > 0` (to either `items` or `df`) to capture them:
 
 ```
 In [6]: (df['rating'] > 0).mean().round(3)
@@ -180,7 +180,7 @@ title
  Final Fantasy Anthology: Official Strategy Gui...  10.000000     2
 ```
 
-The column names may look a bit strange to you. They are a multi-index object (Pandas sophistication). 
+The column names may look a bit strange to you. They are a **multi-index** object (a Pandas sophistication). 
 
 ```
 In [9]: df1.columns
@@ -247,56 +247,51 @@ Out[12]:
 224916  http://images.amazon.com/images/P/0553246917.0...  
 ```
 
-We prepare aside a list of the ISBN's of these six editions. This would be `mc_isbn`.
-
-```
-In [13]: mc_isbn = items[items['title'].str.contains('martian chronicles', case=False)]['isbn']
-    ...: mc_isbn
-Out[13]: 
-175       0553278223
-277       0380973839
-15537     0553263633
-59089     0553131796
-96297     0553229680
-224916    0553246917
-Name: isbn, dtype: object
-```
-
 ## Q5. Five books to be recommended to users having picked *The Martian Chronicles*
 
-For further calculations, we retain the number of times The Martian Chronicles has been picked. This woul be `mc_count`, which turns out to be 93.
+The recommendation will involve books that been picked by the users who have picked *The Martian Chronicles*. We create a series countaing those users.
 
 ```
-In [14]: mc_count = (df['isbn'].isin(mc_isbn)).sum()
-    ...: mc_count
-Out[14]: 93
-```
-The recommendation will involve books that been picked by the users that have picked Users who have picked *The Martian Chronicles*. This would be `mc_users`.
-
-```
-In [15]: mc_users = df[df['isbn'].isin(mc_isbn)]['user']
-```
-
-*Note*. You may easily check (with `.value_counts()`) that two users picked twice this book, so there are only 91 unique users in `mc_users`. But this would not affect our recommendation, so our code ignore ignore it.
-
-The data used for the recommendation will be those involving the selected users. This would be `mc_df`
-
-```
-In [16]: mc_df = df[df['user'].isin(mc_users)]
-```
-
-Every row corresponds to one book picked by the selected users. We don't want to include *The Martian Chronicles* among the recommended books, so we drop the corresponding rows.
-
-```
-In [17]: mc_df = mc_df[~mc_df['isbn'].isin(mc_isbn)]
+In [13]: mc_users = df[df['title'].str.contains('martian chronicles', case=False)]['user']
+    ...: mc_users
+Out[13]: 
+188544       242
+188545       882
+188546      2313
+188547      4098
+188548      6280
+           ...  
+698781    181928
+698782    228998
+698783    243891
+698784    270754
+921496    140223
+Name: user, Length: 93, dtype: int64
 ```
 
-The recommended books will be thos appearing more often in `mc_df`. I can express this in relative terms as the **confidence**
+*Note*. You may easily check (with `.value_counts()`) that two users picked twice this book, so there are only 91 unique users in `mc_users`. But this will not affect our recommendation, so our code ignore ignore it.
+
+The data used for the recommendation will be those involving the selected users. We gather these data in a new data set.
 
 ```
-In [18]: conf = mc_df['isbn'].value_counts()/mc_count
+In [14]: mc_df = df[df['user'].isin(mc_users)]
+```
+
+Every row in this data set corresponds to one book picked by the selected users. We don't want to include *The Martian Chronicles* among the recommended books, so we drop the corresponding rows. This leaves us with 59,861 picks.
+
+```
+In [15]: mc_df = mc_df[~mc_df['title'].str.contains('martian chronicles', case=False)]
+    ...: mc_df.shape
+Out[15]: (59861, 8)
+```
+
+The recommended books will be those appearing more often in `mc_df`. We can express this in relative terms as the **confidence**:
+
+```
+In [16]: conf = mc_df['isbn'].value_counts()/len(mc_users)
     ...: conf
-Out[18]: 
+Out[16]: 
+isbn
 0345342968    0.301075
 0971880107    0.279570
 044021145X    0.268817
@@ -308,14 +303,15 @@ Out[18]:
 3552052054    0.010753
 3552048693    0.010753
 1583330844    0.010753
-Name: isbn, Length: 41479, dtype: float64
+Name: count, Length: 41479, dtype: float64
 ```
 
-The interpretation of the confidence is straightforward: on top, 30.1% of the readers of the *The Martian Chronicles* have picked the book with ISBN 0345342968. Next, 27.9% have picked the book with ISBN 0971880107. These would be the first recommendations.
+The interpretation of the confidence is straightforward: on top, 30.1% of the readers of the *The Martian Chronicles* have picked the book with ISBN 0345342968. Next, 27.9% have picked the book with ISBN 0971880107. These would be the first recommendations. Joining the top five confidence values with the relevant columns of `items`, we can produce a clear report. Note that, now, the columns on which the join is based are specified by the parameters `left_index` and `right_on`,
 
 ```
-In [19]: pd.DataFrame({'conf': conf[:5]}).join(items.set_index('isbn'))[['title', 'author', 'conf']]
-Out[19]: 
+In [17]: pd.DataFrame({'conf': conf[:5]}).merge(items, left_index=True, right_on='isbn')[['title', 'author', 'conf']]
+
+Out[17]: 
                                 title           author      conf
 0345342968             Fahrenheit 451     RAY BRADBURY  0.301075
 0971880107                Wild Animus     Rich Shapero  0.279570
@@ -327,9 +323,9 @@ Out[19]:
 Nevertheless, this is not a selection of titles, but a selection of ISBN's. You may wish to aggregate the editions, so your recommendation would be based on the title, and a later search would find the most accesible edition. This can be achieved by summing the confidences of the editions of the same title.
 
 ```
-In [20]: mc_conf = pd.DataFrame({'conf': conf}).join(items.set_index('isbn'))[['title', 'author', 'conf']]
+In [18]: mc_conf = pd.DataFrame({'conf': conf}).merge(items, left_index=True, right_on='isbn')[['title', 'author', 'conf']]
     ...: mc_conf.groupby(by=['title', 'author'])['conf'].sum().sort_values(ascending=False)[:5]
-Out[20]: 
+Out[18]: 
 title                  author         
 Fahrenheit 451         RAY BRADBURY       0.333333
 The Handmaid's Tale    Margaret Atwood    0.301075
@@ -339,4 +335,5 @@ Wild Animus            Rich Shapero       0.279570
 Name: conf, dtype: float64
 ```
 
-What happened? *Wild Animus* has only one edition, while the other competitors have several editions. How does the recommendation work? If you pick one of the editions of the *The Martian Chronicles* in English, the titles *Farenheit 451*, *The Handmaid's Tale*, etc will be recommended, in the order displayed in `Out[20]`.
+What happened? *Wild Animus* has only one edition, while the other competitors have several editions. How does the recommendation work? If you pick one of the editions of the *The Martian Chronicles* in English, the titles *Farenheit 451*, *The Handmaid's Tale*, etc will be recommended, in the order displayed in `Out[18]`.
+

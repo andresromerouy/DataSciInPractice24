@@ -37,7 +37,7 @@ In a CF recommender system, the first step is representing the relationship betw
 
 The similarity measures used in this context are typically variations of the **cosine formula**, which you may have seen in a linear algebra course. The cosine of two *n*-dimensional vectors *x* and *y* is defined as the dot product divided by the product of their norms,
 
-$$\cos(x,y)=\frac{\displaystyle x_1y_1 + \cdots + x_ny_n}{\displaystyle \sqrt{\big(x_1^2 + \cdots + x_n^2\big)\big(y_1^2 + \cdots + y_n^2\big)}}\,.$$
+$$\cos(x,y)=\frac{\displaystyle x_1y_1 + \cdots + x_ny_n}{\displaystyle \sqrt{\big(x_1^2 + \cdots + x_n^2\big)\big(y_1^2 + \cdots + y_n^2\big)}}.$$
 
 Although you can find in other contexts the cosine formula applied directly, it is recommended here a previous adjustment of the ratings by subtracting the corresponding user average. In this way we are taking into account the difference in rating scale (or the difference in purchasing power). The resulting formula is called the **adjusted cosine formula**.
 

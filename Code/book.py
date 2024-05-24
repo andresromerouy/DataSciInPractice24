@@ -27,23 +27,15 @@ df1[df1['count'] >= 25].sort_values(by='mean', ascending=False).head(10)
 
 # Q4. How many editions of The Martian Chronicles in English #
 items[items['title'].str.contains('martian chronicles', case=False)]
-mc_isbn = items[items['title'].str.contains('martian chronicles', case=False)]['isbn']
-mc_isbn
 
-# Q5a. How many users picking The Martian Chronicles #
-mc_count = (df['isbn'].isin(mc_isbn)).sum()
-mc_count
-
-# Q5b. Selecting data for the recommendation #
-mc_users = df[df['isbn'].isin(mc_isbn)]['user']
+# Q5. Recommendation for readers of The Martian Chronicles #
+mc_users = df[df['title'].str.contains('martian chronicles', case=False)]['user']
+mc_users
 mc_df = df[df['user'].isin(mc_users)]
-mc_df = mc_df[~mc_df['isbn'].isin(mc_isbn)]
-
-# Q5c. Recommendation for readers of The Martian Chronicles #
-conf = mc_df['isbn'].value_counts()/mc_count
+mc_df = mc_df[~mc_df['title'].str.contains('martian chronicles', case=False)]
+mc_df.shape
+conf = mc_df['isbn'].value_counts()/len(mc_users)
 conf
-pd.DataFrame({'conf': conf}).join(items.set_index('isbn'))[['title', 'author', 'conf']]
-
-# Q5d. Variation
-mc_conf = pd.DataFrame({'conf': conf}).join(items.set_index('isbn'))[['title', 'author', 'conf']]
+pd.DataFrame({'conf': conf[:5]}).merge(items, left_index=True, right_on='isbn')[['title', 'author', 'conf']]
+mc_conf = pd.DataFrame({'conf': conf}).merge(items, left_index=True, right_on='isbn')[['title', 'author', 'conf']]
 mc_conf.groupby(by=['title', 'author'])['conf'].sum().sort_values(ascending=False)[:5]

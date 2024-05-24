@@ -87,7 +87,7 @@ CF systems have been very successful in the past, but their widespread use has r
 
 **Association rules** can be used to develop top-*N* recommender systems in the following way. For each customer, we create a transaction containing the products that he/she has purchased in the past. We then use an association mining algorithm under minimum support and minimum confidence constraints. 
 
-For a target customer, the top-*N* recommended products are selected as follows: (a) we find the rules in which this customer has purchased all the products on the left side of the rule, (b) we sort the products on the right side of these rules, based on the confidence of the corresponding rule, and (c) we pick the *N* highest ranked products. 
+For a target customer, the top-*N* recommended products are selected as follows: (a) we find the rules in which this customer has purchased all the products on the left side of the rule, (b) we sort the products on the right side of these rules, based on the **confidence** of the corresponding rule, and (c) we pick the *N* highest ranked products. 
 
 Association rules can also be used on generic recommendations. We set the antecedent of the rule equal to a particular item and the length of the rule to 2, taking the rules with high confidence as recommendations.
 
